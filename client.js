@@ -12,19 +12,19 @@ $('document').ready(function () {
                 if (!that.pause) {
                     if (that.secondsRemaining > 0) {
                         that.secondsRemaining -= 1;
-                        that.displayTimer(that.minutesRemaining, that.secondsRemaining);
+                        that.displayTimer(that.minutesRemaining, that.secondsRemaining,'roundTimer');
                     } else if (that.minutesRemaining > 0) {
                         that.minutesRemaining -= 1;
                         that.secondsRemaining = 59;
-                        that.displayTimer(that.minutesRemaining,that.secondsRemaining);
-                    }else{
+                        that.displayTimer(that.minutesRemaining, that.secondsRemaining,'roundTimer');
+                    } else {
                         clearInterval();
                     }
                 }
             }, 1000);
         };
 
-        this.displayTimer = function (min, sec) {
+        this.displayTimer = function (min,sec,timer) {
             var minutes = min.toString();
             var seconds = sec.toString();
             if (sec < 10) {
@@ -33,8 +33,8 @@ $('document').ready(function () {
             if (min < 10) {
                 minutes = '0' + minutes;
             }
-            $('#roundTimer').find('.seconds').html(seconds);
-            $('#roundTimer').find('.minutes').html(minutes);
+            $('#'+timer).find('.seconds').html(seconds);
+            $('#'+timer).find('.minutes').html(minutes);
         };
 
         this.togglePause = function () {
@@ -45,15 +45,15 @@ $('document').ready(function () {
             }
         };
 
-        this.displayTimer(min,sec);
+        this.displayTimer(min,sec,'roundTimer');
     }
 
-    var testTimer = new Timer(1, 10);
+    var roundTimer = new Timer(1, 10);
 
-    testTimer.start();
+    roundTimer.start();
 
     $('#round-control').click(function () {
-        testTimer.togglePause();
+        roundTimer.togglePause();
     });
 
 
