@@ -1,0 +1,99 @@
+html,body{
+    height:100%;
+    width:100%;
+}
+
+@font-face{
+    font-family:digital;
+    src:url('digital-7.ttf');
+}
+
+.box{
+    height:600px;
+    width:1000px;
+    background-color:ivory;
+    border: 30px outset silver;
+    margin:0 auto;
+    position:relative;
+    top:50px;
+    border-radius:5px;
+    overflow:hidden;
+    
+}
+
+.box-interior{
+    width:97%;
+    height:95%;
+    padding:10px;
+    border:5px inset gray;
+    margin:0 auto;
+    overflow:hidden;
+}
+
+.settingArea{
+    position:absolute;
+    left:5px;
+    top:7px;
+    width:320px;
+    height:575px;
+    display:inline-block;
+}
+
+.logo{
+    position:absolute;
+    right:5px;
+    width:320px;
+    height:575px;
+    top:7px;
+    display:inline-block;
+}
+
+.timers{
+    position:absolute;
+    width:320px;
+    height:575px;
+    left:340px;
+    top:7px;
+    display:inline-block;
+}
+
+.int-container{
+    position:normal;
+    padding:5px;
+    text-align:center;
+}
+
+.displaySetting{
+    background-color:black;
+    width:200px;
+    margin:0 auto;
+    border:3px inset gray;
+}
+
+.setting-label{
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+.setting-buttons{
+    margin-top:10px;
+
+}
+
+.setting-buttons button{
+    width:95px;
+    height:30px;
+    font-size:18px;
+    font-family:Arial, Helvetica, sans-serif;
+    background-color:silver;
+    border-radius:5px;
+    border:2px outset gray;
+    margin-left:5px;
+
+}
+
+.lcd{
+    font-size:60px;
+    font-family:digital;
+    color:red;
+    text-shadow:0 0 15px pink;
+}

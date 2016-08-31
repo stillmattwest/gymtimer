@@ -43,7 +43,7 @@ $('document').ready(function () {
                         clearInterval();
                     }
                 }
-            }, 250);
+            }, 100);
         };
 
         this.displayTimer = function (min, sec, timer) {

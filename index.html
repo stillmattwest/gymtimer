@@ -1,25 +1,74 @@
 <!DOCTYPE html>
+
 <head>
     <title>CodeSLO Pomodoro Clock</title>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
     <div class="container">
-        <div class='timer' id='roundTimer'>
-            <h2 class='display'><span class='minutes'>00</span>:<span class='seconds'>00</span></h2>
+        <div class="lights">
         </div>
-        <div class='timer' id='breakTimer'>
-            <h2 class='display'><span class='minutes'>0</span>:<span class='seconds'>00</span></h2>
+        <!-- ends lights div -->
+        <div class='box'>
+            <div class="box-interior">
+                <div class="settingArea">
+                    <div class="setting" id="setRoundTimer">
+                        <div class="int-container">
+                            <h3 class="setting-label">ROUND LENGTH</h3>
+                            <div class="displaySetting"><span class='lcd'>00:00</span></div>
+                            <div class="setting-buttons">
+                                <span class="addSeconds"><button class="add30">+30 SEC</button><button>-30 Sec</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="settings" id="setBreakTimer">
+                        <div class="int-container">
+                            <h3 class="setting-label">REST LENGTH</h3>
+                            <div class="displaySetting"><span class='lcd'>00:00</span></div>
+                            <div class="setting-buttons">
+                                <span class="addSeconds"><button class="add30">+30 SEC</button><button class="sub30">-30 SEC</button></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="settings" id="setRounds">
+                        <div class="int-container">
+                            <h3 class="setting-label">NO. OF ROUNDS</h3>
+                            <div class="displaySetting"><span class='lcd'>1</span></div>
+                            <div class="setting-buttons">
+                                <span class="addRounds"><button class="add30">+</button><button class="sub30">-</button></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- ends settings div -->
+                <div class="timers">
+                    <div class='timer' id='roundTimer'>
+                        <h2 class='display'><span class='minutes'>00</span>:<span class='seconds'>00</span></h2>
+                    </div>
+                    <div class='timer' id='breakTimer'>
+                        <h2 class='display'><span class='minutes'>0</span>:<span class='seconds'>00</span></h2>
+                    </div>
+                    <div class='timer' id='rounds'>
+                        <h2 class='display' id='roundDisplay'>0</h2>
+                    </div>
+                    <div class='buttons'>
+                        <button class='control-btn' id='round-control'>Start / Pause Round Timer</button>
+                        <button class='control-btn' id='break-control'>Start / Pause Break Timer</button>
+                    </div>
+                </div>
+                <!-- ends timers div -->
+                <div class="logo">
+                    <h2>CodeSLO</h2>
+                </div>
+                <!-- end logo div -->
+            </div>
+            <!-- end box-interior -->
         </div>
-        <div class = 'timer' id='rounds'>
-            <h2 class='display' id='roundDisplay'>0</h2>
-        </div>
-        <div class='buttons'>
-            <button class='control-btn' id='round-control'>Start / Pause Round Timer</button>
-            <button class='control-btn' id='break-control'>Start / Pause Break Timer</button>
-        </div>
+        <!-- end box -->
 
     </div>
+    <!-- end container -->
     <!-- Scripts below -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <script src="client.js"></script>
