@@ -5,7 +5,7 @@ html,body{
 
 @font-face{
     font-family:digital;
-    src:url('digital-7.ttf');
+    src:url('digital-7-mono.ttf');
 }
 
 .box{
@@ -95,5 +95,22 @@ html,body{
     font-size:60px;
     font-family:digital;
     color:red;
-    text-shadow:0 0 15px pink;
+    text-shadow:0 0 12px pink;
+}
+
+.timer-lcd{
+    font-size:98px;
+}
+
+.timerDisplay{
+    width:250px;
+    padding:1px;
+}
+
+.timer-container{
+    margin-bottom:0px;
+}
+
+.buttons{
+    text-align:center;
 }

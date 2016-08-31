@@ -14,7 +14,7 @@ $('document').ready(function () {
 
         this.start = function () {
             var that = this;
-            setInterval(function () {
+            var timer = setInterval(function () {
                 if (!that.pause) {
                     if (that.secondsRemaining > 0) {
                         that.secondsRemaining -= 1;
@@ -30,17 +30,20 @@ $('document').ready(function () {
                         that.breakMinRemaining -= 1;
                         that.breakSecRemaining = 59;
                         that.displayTimer(that.breakMinRemaining, that.breakSecRemaining, 'breakTimer');
-                    } else if (that.roundsRemaining > 0) {
+                    } else if (that.roundsRemaining > 1) {
                         that.roundsRemaining -= 1;
                         that.minutesRemaining = that.min;
-                        that.breakMinRemaining = that.breakmin;
-                        that.breakSecRemaining = that.breaksec;
+                        if (that.roundsRemaining > 2) {
+                            that.breakMinRemaining = that.breakmin;
+                            that.breakSecRemaining = that.breaksec;
+                        }
                         that.displayTimer(that.minutesRemaining, that.secondsRemaining, 'roundTimer');
                         that.displayTimer(that.breakMinRemaining, that.breakSecRemaining, 'breakTimer');
                         that.displayRounds(that.roundsRemaining);
                     } else {
+                        that.roundsRemaining -= 1;
                         that.displayRounds(that.roundsRemaining);
-                        clearInterval();
+                        clearInterval(timer);
                     }
                 }
             }, 100);
@@ -52,9 +55,9 @@ $('document').ready(function () {
             if (sec < 10) {
                 seconds = '0' + seconds;
             }
-            if (min < 10) {
-                minutes = '0' + minutes;
-            }
+            // if (min < 10) {
+            //     minutes = '0' + minutes;
+            // }
             $('#' + timer).find('.seconds').html(seconds);
             $('#' + timer).find('.minutes').html(minutes);
         };
