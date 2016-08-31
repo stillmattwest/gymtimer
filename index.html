@@ -16,17 +16,17 @@
                     <div class="setting" id="setRoundTimer">
                         <div class="int-container">
                             <h3 class="setting-label">ROUND LENGTH</h3>
-                            <div class="displaySetting"><span class='lcd'>00:00</span></div>
-                            <div class="setting-buttons">
-                                <span class="addSeconds"><button class="add30">+30 SEC</button><button>-30 Sec</span>
+                            <div class="displaySetting"><span class='lcd' id="setRoundLength"><span class="minutes">00</span>:<span class="seconds">00</span></span></div>
+                            <div class="setting-buttons" data="setRoundLength">
+                                <span class="addSeconds"><button class="add30">+30 SEC</button><button class="sub30">-30 Sec</span>
                             </div>
                         </div>
                     </div>
                     <div class="settings" id="setBreakTimer">
                         <div class="int-container">
                             <h3 class="setting-label">REST LENGTH</h3>
-                            <div class="displaySetting"><span class='lcd'>00:00</span></div>
-                            <div class="setting-buttons">
+                            <div class="displaySetting"><span class='lcd' id="setBreakLength"><span class="minutes">00</span>:<span class="seconds">00</span></span></div>
+                            <div class="setting-buttons" data="setBreakLength">
                                 <span class="addSeconds"><button class="add30">+30 SEC</button><button class="sub30">-30 SEC</button></span>
                             </div>
                         </div>
@@ -34,9 +34,9 @@
                     <div class="settings" id="setRounds">
                         <div class="int-container">
                             <h3 class="setting-label">NO. OF ROUNDS</h3>
-                            <div class="displaySetting"><span class='lcd'>1</span></div>
-                            <div class="setting-buttons">
-                                <span class="addRounds"><button class="add30">+</button><button class="sub30">-</button></span>
+                            <div class="displaySetting"><span class='lcd' id="setRounds">1</span></div>
+                            <div class="setting-buttons" data="setRounds">
+                                <span class="addRounds"><button class="addRound">+</button><button class="subRound">-</button></span>
                             </div>
                         </div>
                     </div>

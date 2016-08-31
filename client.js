@@ -55,9 +55,6 @@ $('document').ready(function () {
             if (sec < 10) {
                 seconds = '0' + seconds;
             }
-            // if (min < 10) {
-            //     minutes = '0' + minutes;
-            // }
             $('#' + timer).find('.seconds').html(seconds);
             $('#' + timer).find('.minutes').html(minutes);
         };
@@ -86,12 +83,38 @@ $('document').ready(function () {
     // round length(min,sec)break length(min,sec)number of rounds
     var roundTimer = new Timer(1, 0, 1, 0, 2);
 
-
     roundTimer.start();
+
+    // button handling
 
     $('#round-control').click(function () {
         roundTimer.togglePause();
     });
+
+    $('.add30').click(function () {
+        var timer = $(this).closest('div').attr('data');
+        if (roundTimer.sec < 30) {
+            roundTimer.sec = 30;
+        } else {
+            roundTimer.sec = 0;
+            roundTimer.min++;
+        }
+        roundTimer.displayTimer(roundTimer.min, roundTimer.sec, timer);
+
+    });
+
+    $('.sub30').click(function () {
+        var timer = $(this).closest('div').attr('data');
+        if (roundTimer.sec === 30) {
+            roundTimer.sec = 0;
+        } else if (roundTimer.min > 0) {
+            roundTimer.sec = 30;
+            roundTimer.min--;
+        }
+        roundTimer.displayTimer(roundTimer.min, roundTimer.sec, timer);
+    });
+
+
 
 
 
