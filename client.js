@@ -75,13 +75,23 @@ $('document').ready(function () {
             }
         };
 
+        this.setRoundLength = function(min,sec){
+            this.minutesRemaining = min;
+            this.secondsRemaining = sec;
+        }
+
+        this.setBreakLength = function(min,sec){
+            this.breakMinRemaining = min;
+            this.breakSecRemaining = sec;
+        }
+
         this.displayTimer(roundmin, roundsec, 'roundTimer');
         this.displayTimer(breakmin, breaksec, 'breakTimer');
         this.displayRounds(rounds);
     }
 
     // round length(min,sec)break length(min,sec)number of rounds
-    var roundTimer = new Timer(1, 0, 1, 0, 2);
+    var roundTimer = new Timer(0, 0, 0, 0, 0);
 
     roundTimer.start();
 
@@ -91,27 +101,38 @@ $('document').ready(function () {
         roundTimer.togglePause();
     });
 
+
     $('.add30').click(function () {
         var timer = $(this).closest('div').attr('data');
-        if (roundTimer.sec < 30) {
-            roundTimer.sec = 30;
-        } else {
-            roundTimer.sec = 0;
-            roundTimer.min++;
+        var link = $(this).closest('div').attr('data-link');
+        var min = parseInt($('#'+timer).closest('div').find('.minutes').html());
+        var sec = parseInt($('#'+timer).closest('div').find('.seconds').html());
+        if(sec === 30){
+            sec = 0;
+            min++;
+        }else{
+            sec = 30;
         }
-        roundTimer.displayTimer(roundTimer.min, roundTimer.sec, timer);
+        roundTimer.displayTimer(min, sec, timer);
+        roundTimer.displayTimer(min,sec,link);
+        roundTimer[timer](min,sec)
 
     });
 
     $('.sub30').click(function () {
-        var timer = $(this).closest('div').attr('data');
-        if (roundTimer.sec === 30) {
-            roundTimer.sec = 0;
-        } else if (roundTimer.min > 0) {
-            roundTimer.sec = 30;
-            roundTimer.min--;
+       var timer = $(this).closest('div').attr('data');
+       var link = $(this).closest('div').attr('data-link');
+        var min = parseInt($('#'+timer).closest('div').find('.minutes').html());
+        var sec = parseInt($('#'+timer).closest('div').find('.seconds').html());
+        if(sec === 30){
+            sec = 0;
+        }else{
+            sec = 30;
+            min--;
         }
-        roundTimer.displayTimer(roundTimer.min, roundTimer.sec, timer);
+        roundTimer.displayTimer(min, sec, timer);
+        roundTimer.displayTimer(min,sec,link);
+        roundTimer[timer](min,sec);
     });
 
 
