@@ -181,6 +181,7 @@ $('document').ready(function () {
         roundTimer.stop();
         roundTimer.clearTimer();
         roundTimer.resetDisplays();
+        roundTimer.start();
     });
 
 
