@@ -17,22 +17,23 @@ $('document').ready(function () {
             var timer = setInterval(function () {
                 if (!that.pause) {
                     if (that.secondsRemaining > 0) {
-                        that.secondsRemaining -= 1;
+                        that.secondsRemaining--;
                         that.displayTimer(that.minutesRemaining, that.secondsRemaining, 'roundTimer');
                     } else if (that.minutesRemaining > 0) {
-                        that.minutesRemaining -= 1;
+                        that.minutesRemaining--;
                         that.secondsRemaining = 59;
                         that.displayTimer(that.minutesRemaining, that.secondsRemaining, 'roundTimer');
                     } else if (that.breakSecRemaining > 0) {
-                        that.breakSecRemaining -= 1;
+                        that.breakSecRemaining--;
                         that.displayTimer(that.breakMinRemaining, that.breakSecRemaining, 'breakTimer');
                     } else if (that.breakMinRemaining > 0) {
-                        that.breakMinRemaining -= 1;
+                        that.breakMinRemaining--;
                         that.breakSecRemaining = 59;
                         that.displayTimer(that.breakMinRemaining, that.breakSecRemaining, 'breakTimer');
                     } else if (that.roundsRemaining > 1) {
-                        that.roundsRemaining -= 1;
+                        that.roundsRemaining--;
                         that.minutesRemaining = that.min;
+                        that.secondsRemaining = that.sec;
                         if (that.roundsRemaining > 2) {
                             that.breakMinRemaining = that.breakmin;
                             that.breakSecRemaining = that.breaksec;
@@ -41,7 +42,7 @@ $('document').ready(function () {
                         that.displayTimer(that.breakMinRemaining, that.breakSecRemaining, 'breakTimer');
                         that.displayRounds(that.roundsRemaining);
                     } else {
-                        that.roundsRemaining -= 1;
+                        that.roundsRemaining--;
                         that.displayRounds(that.roundsRemaining);
                         clearInterval(timer);
                     }
@@ -74,11 +75,15 @@ $('document').ready(function () {
         this.setRoundLength = function (min, sec) {
             this.minutesRemaining = min;
             this.secondsRemaining = sec;
+            this.min = min;
+            this.sec = sec;
         }
 
         this.setBreakLength = function (min, sec) {
             this.breakMinRemaining = min;
             this.breakSecRemaining = sec;
+            this.breakmin = min;
+            this.breaksec = sec;
         }
 
         this.setRounds = function (rounds) {
