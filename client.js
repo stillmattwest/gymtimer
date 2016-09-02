@@ -98,6 +98,9 @@ $('document').ready(function () {
             this.displayTimer(0, 0, 'roundTimer');
             this.displayTimer(0, 0, 'breakTimer');
             this.displayRounds(0);
+            this.displayTimer(0,0,'setRoundLength');
+            this.displayTimer(0,0,'setBreakLength');
+            $('#setRounds').html(0);
         }
 
         this.resetDisplays();
