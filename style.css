@@ -114,3 +114,36 @@ html,body{
 .buttons{
     text-align:center;
 }
+
+.big-btn-group{
+    width:220px;
+    padding:10px 0 0 0;
+    text-align:center;
+    margin:0 auto;
+}
+
+.big-btn-group li{
+    display:inline-block;
+}
+
+.big-btn{
+    width:100px;
+    height:40px;
+    border-radius:5px;
+    border:2px outset gray;
+    margin-left:5px;
+    font-size:18px;
+    color:white;
+}
+
+.reset-btn{
+    background-color:orange;
+}
+
+.go-btn{
+    background-color:green;
+}
+
+.pause-btn{
+    background-color:orange;
+}

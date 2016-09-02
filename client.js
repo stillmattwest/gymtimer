@@ -1,59 +1,59 @@
 $('document').ready(function () {
     function Timer(roundmin, roundsec, breakmin, breaksec, rounds) {
-        this.min = roundmin;
-        this.sec = roundsec;
-        this.breakmin = breakmin;
-        this.breaksec = breaksec;
-        this.secondsRemaining = this.sec;
-        this.minutesRemaining = this.min;
-        this.breakMinRemaining = this.breakmin;
-        this.breakSecRemaining = this.breaksec;
-        this.rounds = rounds;
-        this.roundsRemaining = rounds;
-        this.pause = true;
+        var min = roundmin;
+        var sec = roundsec;
+        var breakmin = breakmin;
+        var breaksec = breaksec;
+        var secondsRemaining = sec;
+        var minutesRemaining = min;
+        var breakMinRemaining = breakmin;
+        var breakSecRemaining = breaksec;
+        var rounds = rounds;
+        var roundsRemaining = rounds;
+        var pause = true;
 
         this.start = function () {
             var that = this;
             var timer = setInterval(function () {
-                if (!that.pause) {
-                    if (that.secondsRemaining > 0) {
-                        that.secondsRemaining--;
-                        that.displayTimer(that.minutesRemaining, that.secondsRemaining, 'roundTimer');
-                    } else if (that.minutesRemaining > 0) {
-                        that.minutesRemaining--;
-                        that.secondsRemaining = 59;
-                        that.displayTimer(that.minutesRemaining, that.secondsRemaining, 'roundTimer');
-                    } else if (that.breakSecRemaining > 0) {
-                        that.breakSecRemaining--;
-                        that.displayTimer(that.breakMinRemaining, that.breakSecRemaining, 'breakTimer');
-                    } else if (that.breakMinRemaining > 0) {
-                        that.breakMinRemaining--;
-                        that.breakSecRemaining = 59;
-                        that.displayTimer(that.breakMinRemaining, that.breakSecRemaining, 'breakTimer');
-                    } else if (that.roundsRemaining > 1) {
-                        that.roundsRemaining--;
-                        that.minutesRemaining = that.min;
-                        that.secondsRemaining = that.sec;
-                        if (that.roundsRemaining > 2) {
-                            that.breakMinRemaining = that.breakmin;
-                            that.breakSecRemaining = that.breaksec;
+                if (!pause) {
+                    if (secondsRemaining > 0) {
+                        secondsRemaining--;
+                        that.displayTimer(minutesRemaining, secondsRemaining, 'roundTimer');
+                    } else if (minutesRemaining > 0) {
+                        minutesRemaining--;
+                        secondsRemaining = 59;
+                        that.displayTimer(minutesRemaining, secondsRemaining, 'roundTimer');
+                    } else if (breakSecRemaining > 0) {
+                        breakSecRemaining--;
+                        that.displayTimer(breakMinRemaining, breakSecRemaining, 'breakTimer');
+                    } else if (breakMinRemaining > 0) {
+                        breakMinRemaining--;
+                        breakSecRemaining = 59;
+                        that.displayTimer(breakMinRemaining, breakSecRemaining, 'breakTimer');
+                    } else if (roundsRemaining > 1) {
+                        roundsRemaining--;
+                        minutesRemaining = min;
+                        secondsRemaining = sec;
+                        if (roundsRemaining > 1) {
+                            breakMinRemaining = breakmin;
+                            breakSecRemaining = breaksec;
                         }
-                        that.displayTimer(that.minutesRemaining, that.secondsRemaining, 'roundTimer');
-                        that.displayTimer(that.breakMinRemaining, that.breakSecRemaining, 'breakTimer');
-                        that.displayRounds(that.roundsRemaining);
+                        that.displayTimer(minutesRemaining, secondsRemaining, 'roundTimer');
+                        that.displayTimer(breakMinRemaining, breakSecRemaining, 'breakTimer');
+                        that.displayRounds(roundsRemaining);
                     } else {
-                        that.roundsRemaining--;
-                        that.displayRounds(that.roundsRemaining);
+                        roundsRemaining--;
+                        that.displayRounds(roundsRemaining);
                         clearInterval(timer);
                     }
                 }
             }, 100);
         };
 
-        this.displayTimer = function (min, sec, timer) {
-            var minutes = min.toString();
-            var seconds = sec.toString();
-            if (sec < 10) {
+        this.displayTimer = function (mins, secs, timer) {
+            var minutes = mins.toString();
+            var seconds = secs.toString();
+            if (secs < 10) {
                 seconds = '0' + seconds;
             }
             $('#' + timer).find('.seconds').html(seconds);
@@ -64,46 +64,62 @@ $('document').ready(function () {
             $('#roundDisplay').html(round)
         }
 
-        this.togglePause = function () {
-            if (this.pause) {
-                this.pause = false;
-            } else {
-                this.pause = true;
-            }
+        this.go = function () {
+            pause = false;
         };
 
-        this.setRoundLength = function (min, sec) {
-            this.minutesRemaining = min;
-            this.secondsRemaining = sec;
-            this.min = min;
-            this.sec = sec;
+        this.stop = function () {
+            pause = true;
+        }
+
+        this.setRoundLength = function (mins, secs) {
+            minutesRemaining = min;
+            secondsRemaining = sec;
+            min = mins;
+            sec = secs;
         }
 
         this.setBreakLength = function (min, sec) {
-            this.breakMinRemaining = min;
-            this.breakSecRemaining = sec;
-            this.breakmin = min;
-            this.breaksec = sec;
+            breakMinRemaining = min;
+            breakSecRemaining = sec;
+            breakmin = min;
+            breaksec = sec;
         }
 
         this.setRounds = function (rounds) {
-            this.roundsRemaining = rounds;
+            roundsRemaining = rounds;
         }
 
-        this.displayTimer(roundmin, roundsec, 'roundTimer');
-        this.displayTimer(breakmin, breaksec, 'breakTimer');
-        this.displayRounds(rounds);
-    }
+        this.clearTimer = function () {
+            clearInterval(this.timer);
+        }
 
-    // round length(min,sec)break length(min,sec)number of rounds
+        this.resetDisplays = function () {
+            this.displayTimer(0, 0, 'roundTimer');
+            this.displayTimer(0, 0, 'breakTimer');
+            this.displayRounds(0);
+        }
+
+        this.resetDisplays();
+    } 
+
+    // end Timer constructor
+
+    // activate new Timer
+
+    // parameters are: round length(min,sec)break length(min,sec)number of rounds
     var roundTimer = new Timer(0, 0, 0, 0, 0);
 
     roundTimer.start();
 
     // button handling
 
-    $('#round-control').click(function () {
-        roundTimer.togglePause();
+    $('#go-btn').click(function () {
+        roundTimer.go();
+    });
+
+    $('#pause-btn').click(function () {
+        roundTimer.stop();
     });
 
 
@@ -120,7 +136,7 @@ $('document').ready(function () {
         }
         roundTimer.displayTimer(min, sec, timer);
         roundTimer.displayTimer(min, sec, link);
-        roundTimer[timer](min, sec)
+        roundTimer[timer](min, sec);
 
     });
 
@@ -153,6 +169,15 @@ $('document').ready(function () {
         $('#setRounds').html(rounds);
         roundTimer.setRounds(rounds);
         roundTimer.displayRounds(rounds);
+    });
+
+    $('#reset-btn').click(function () {
+        roundTimer.setRoundLength(0);
+        roundTimer.setBreakLength(0);
+        roundTimer.setRounds(0);
+        roundTimer.stop();
+        roundTimer.clearTimer();
+        roundTimer.resetDisplays();
     });
 
 

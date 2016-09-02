@@ -16,7 +16,8 @@
                     <div class="setting" id="setRoundTimer">
                         <div class="int-container">
                             <h3 class="setting-label">ROUND LENGTH</h3>
-                            <div class="displaySetting"><span class='lcd' id="setRoundLength"><span class="minutes">00</span>:<span class="seconds">00</span></span></div>
+                            <div class="displaySetting"><span class='lcd' id="setRoundLength"><span class="minutes">00</span>:<span class="seconds">00</span></span>
+                            </div>
                             <div class="setting-buttons" data="setRoundLength" data-link="roundTimer">
                                 <span class="addSeconds"><button class="add30">+30 SEC</button><button class="sub30">-30 Sec</span>
                             </div>
@@ -25,7 +26,8 @@
                     <div class="settings" id="setBreakTimer">
                         <div class="int-container">
                             <h3 class="setting-label">REST LENGTH</h3>
-                            <div class="displaySetting"><span class='lcd' id="setBreakLength"><span class="minutes">00</span>:<span class="seconds">00</span></span></div>
+                            <div class="displaySetting"><span class='lcd' id="setBreakLength"><span class="minutes">00</span>:<span class="seconds">00</span></span>
+                            </div>
                             <div class="setting-buttons" data="setBreakLength" data-link="breakTimer">
                                 <span class="addSeconds"><button class="add30">+30 SEC</button><button class="sub30">-30 SEC</button></span>
                             </div>
@@ -40,6 +42,11 @@
                                 <button class="changeRounds" data='sub'>-</button>
                             </div>
                         </div>
+                    </div>
+                    <div>
+                        <ul class='big-btn-group'>
+                            <li><button class="big-btn reset-btn">RESET</button></li>
+                        </ul>
                     </div>
                 </div>
                 <!-- ends settings div -->
@@ -58,8 +65,11 @@
                         <h3 class="setting-label">ROUND</h3>
                         <div class="displaySetting timerDisplay"><span class='lcd timer-lcd' id="roundDisplay">0</span></div>
                     </div>
-                    <div class='buttons'>
-                        <button class='control-btn' id='round-control'>Start / Pause Round Timer</button>
+                    <div>
+                        <ul class='big-btn-group'>
+                            <li><button class='big-btn go-btn' id='go-btn'>GO</button></li>
+                            <li><button class='big-btn pause-btn' id='pause-btn'>PAUSE</button></li>
+                        </ul>
                     </div>
                 </div>
                 <!-- ends timers div -->
