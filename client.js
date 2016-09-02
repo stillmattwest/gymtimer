@@ -59,11 +59,7 @@ $('document').ready(function () {
             $('#' + timer).find('.minutes').html(minutes);
         };
 
-        this.displayRounds = function (rounds) {
-            var round = rounds.toString();
-            if (round < 10) {
-                round = '0' + round;
-            }
+        this.displayRounds = function (round) {
             $('#roundDisplay').html(round)
         }
 
@@ -75,14 +71,18 @@ $('document').ready(function () {
             }
         };
 
-        this.setRoundLength = function(min,sec){
+        this.setRoundLength = function (min, sec) {
             this.minutesRemaining = min;
             this.secondsRemaining = sec;
         }
 
-        this.setBreakLength = function(min,sec){
+        this.setBreakLength = function (min, sec) {
             this.breakMinRemaining = min;
             this.breakSecRemaining = sec;
+        }
+
+        this.setRounds = function (rounds) {
+            this.roundsRemaining = rounds;
         }
 
         this.displayTimer(roundmin, roundsec, 'roundTimer');
@@ -105,34 +105,49 @@ $('document').ready(function () {
     $('.add30').click(function () {
         var timer = $(this).closest('div').attr('data');
         var link = $(this).closest('div').attr('data-link');
-        var min = parseInt($('#'+timer).closest('div').find('.minutes').html());
-        var sec = parseInt($('#'+timer).closest('div').find('.seconds').html());
-        if(sec === 30){
+        var min = parseInt($('#' + timer).closest('div').find('.minutes').html());
+        var sec = parseInt($('#' + timer).closest('div').find('.seconds').html());
+        if (sec === 30) {
             sec = 0;
             min++;
-        }else{
+        } else {
             sec = 30;
         }
         roundTimer.displayTimer(min, sec, timer);
-        roundTimer.displayTimer(min,sec,link);
-        roundTimer[timer](min,sec)
+        roundTimer.displayTimer(min, sec, link);
+        roundTimer[timer](min, sec)
 
     });
 
     $('.sub30').click(function () {
-       var timer = $(this).closest('div').attr('data');
-       var link = $(this).closest('div').attr('data-link');
-        var min = parseInt($('#'+timer).closest('div').find('.minutes').html());
-        var sec = parseInt($('#'+timer).closest('div').find('.seconds').html());
-        if(sec === 30){
+        var timer = $(this).closest('div').attr('data');
+        var link = $(this).closest('div').attr('data-link');
+        var min = parseInt($('#' + timer).closest('div').find('.minutes').html());
+        var sec = parseInt($('#' + timer).closest('div').find('.seconds').html());
+        if (sec === 30) {
             sec = 0;
-        }else{
+        } else {
             sec = 30;
             min--;
         }
         roundTimer.displayTimer(min, sec, timer);
-        roundTimer.displayTimer(min,sec,link);
-        roundTimer[timer](min,sec);
+        roundTimer.displayTimer(min, sec, link);
+        roundTimer[timer](min, sec);
+    });
+
+    $('.changeRounds').click(function () {
+        var op = $(this).attr('data');
+        var rounds = parseInt($('#setRounds').html());
+        if (op === 'add') {
+            rounds++;
+        } else {
+            if (rounds > 0) {
+                rounds--;
+            }
+        }
+        $('#setRounds').html(rounds);
+        roundTimer.setRounds(rounds);
+        roundTimer.displayRounds(rounds);
     });
 
 
