@@ -37,8 +37,8 @@ $('document').ready(function () {
                         minutesRemaining = min;
                         secondsRemaining = sec;
                         if (currentRound === rounds) {
-                            breakMinRemaining = breakmin;
-                            breakSecRemaining = breaksec;
+                            breakMinRemaining = 0;
+                            breakSecRemaining = 0;
                         }
                         that.displayTimer(minutesRemaining, secondsRemaining, 'roundTimer');
                         that.displayTimer(breakMinRemaining, breakSecRemaining, 'breakTimer');
@@ -101,7 +101,7 @@ $('document').ready(function () {
             this.displayRounds(1);
             this.displayTimer(0,0,'setRoundLength');
             this.displayTimer(0,0,'setBreakLength');
-            $('#setRounds').html(0);
+            $('#setRounds').html(1);
         }
 
         this.reset();
