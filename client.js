@@ -9,13 +9,15 @@ $('document').ready(function () {
         var breakMinRemaining = breakmin;
         var breakSecRemaining = breaksec;
         var rounds = rounds;
-        var roundsRemaining = rounds;
+        var currentRound = 1;
         var pause = true;
 
         this.start = function () {
             var that = this;
             var timer = setInterval(function () {
                 if (!pause) {
+                    console.log('min:'+min+',sec:'+sec);
+                    console.log(minutesRemaining+' '+secondsRemaining);
                     if (secondsRemaining > 0) {
                         secondsRemaining--;
                         that.displayTimer(minutesRemaining, secondsRemaining, 'roundTimer');
@@ -30,20 +32,18 @@ $('document').ready(function () {
                         breakMinRemaining--;
                         breakSecRemaining = 59;
                         that.displayTimer(breakMinRemaining, breakSecRemaining, 'breakTimer');
-                    } else if (roundsRemaining > 1) {
-                        roundsRemaining--;
+                    } else if (currentRound < rounds) {
+                        currentRound++;
                         minutesRemaining = min;
                         secondsRemaining = sec;
-                        if (roundsRemaining > 1) {
+                        if (currentRound === rounds) {
                             breakMinRemaining = breakmin;
                             breakSecRemaining = breaksec;
                         }
                         that.displayTimer(minutesRemaining, secondsRemaining, 'roundTimer');
                         that.displayTimer(breakMinRemaining, breakSecRemaining, 'breakTimer');
-                        that.displayRounds(roundsRemaining);
+                        that.displayRounds(currentRound);
                     } else {
-                        roundsRemaining--;
-                        that.displayRounds(roundsRemaining);
                         clearInterval(timer);
                     }
                 }
@@ -73,8 +73,9 @@ $('document').ready(function () {
         }
 
         this.setRoundLength = function (mins, secs) {
-            minutesRemaining = min;
-            secondsRemaining = sec;
+            console.log(mins+','+secs);
+            minutesRemaining = mins;
+            secondsRemaining = secs;
             min = mins;
             sec = secs;
         }
@@ -86,24 +87,24 @@ $('document').ready(function () {
             breaksec = sec;
         }
 
-        this.setRounds = function (rounds) {
-            roundsRemaining = rounds;
+        this.setRounds = function (_rounds) {
+            rounds = _rounds;
         }
 
         this.clearTimer = function () {
             clearInterval(this.timer);
         }
 
-        this.resetDisplays = function () {
+        this.reset = function () {
             this.displayTimer(0, 0, 'roundTimer');
             this.displayTimer(0, 0, 'breakTimer');
-            this.displayRounds(0);
+            this.displayRounds(1);
             this.displayTimer(0,0,'setRoundLength');
             this.displayTimer(0,0,'setBreakLength');
             $('#setRounds').html(0);
         }
 
-        this.resetDisplays();
+        this.reset();
     } 
 
     // end Timer constructor
@@ -111,7 +112,7 @@ $('document').ready(function () {
     // activate new Timer
 
     // parameters are: round length(min,sec)break length(min,sec)number of rounds
-    var roundTimer = new Timer(0, 0, 0, 0, 0);
+    var roundTimer = new Timer(0, 0, 0, 0, 1);
 
     roundTimer.start();
 
@@ -129,34 +130,36 @@ $('document').ready(function () {
     $('.add30').click(function () {
         var timer = $(this).closest('div').attr('data');
         var link = $(this).closest('div').attr('data-link');
-        var min = parseInt($('#' + timer).closest('div').find('.minutes').html());
-        var sec = parseInt($('#' + timer).closest('div').find('.seconds').html());
-        if (sec === 30) {
-            sec = 0;
-            min++;
+        var mins = parseInt($('#' + timer).closest('div').find('.minutes').html());
+        var secs = parseInt($('#' + timer).closest('div').find('.seconds').html());
+        if (secs === 30) {
+            secs = 0;
+            mins++;
         } else {
-            sec = 30;
+            secs = 30;
         }
-        roundTimer.displayTimer(min, sec, timer);
-        roundTimer.displayTimer(min, sec, link);
-        roundTimer[timer](min, sec);
-
+        roundTimer.displayTimer(mins, secs, timer);
+        roundTimer.displayTimer(mins, secs, link);
+        roundTimer[timer](mins, secs);
     });
 
     $('.sub30').click(function () {
         var timer = $(this).closest('div').attr('data');
         var link = $(this).closest('div').attr('data-link');
-        var min = parseInt($('#' + timer).closest('div').find('.minutes').html());
-        var sec = parseInt($('#' + timer).closest('div').find('.seconds').html());
-        if (sec === 30) {
-            sec = 0;
-        } else {
-            sec = 30;
-            min--;
+        var mins = parseInt($('#' + timer).closest('div').find('.minutes').html());
+        var secs = parseInt($('#' + timer).closest('div').find('.seconds').html());
+        if(mins === 0 && secs === 0){
+            return;
         }
-        roundTimer.displayTimer(min, sec, timer);
-        roundTimer.displayTimer(min, sec, link);
-        roundTimer[timer](min, sec);
+        if (secs === 30) {
+            secs = 0;
+        } else {
+            secs = 30;
+            mins--;
+        }
+        roundTimer.displayTimer(mins, secs, timer);
+        roundTimer.displayTimer(mins, secs, link);
+        roundTimer[timer](mins, secs);
     });
 
     $('.changeRounds').click(function () {
@@ -165,22 +168,22 @@ $('document').ready(function () {
         if (op === 'add') {
             rounds++;
         } else {
-            if (rounds > 0) {
+            if (rounds > 1) {
                 rounds--;
             }
         }
         $('#setRounds').html(rounds);
         roundTimer.setRounds(rounds);
-        roundTimer.displayRounds(rounds);
+        
     });
 
     $('#reset-btn').click(function () {
         roundTimer.setRoundLength(0);
         roundTimer.setBreakLength(0);
-        roundTimer.setRounds(0);
+        roundTimer.setRounds(1);
         roundTimer.stop();
         roundTimer.clearTimer();
-        roundTimer.resetDisplays();
+        roundTimer.reset();
         roundTimer.start();
     });
 
