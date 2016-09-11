@@ -11,13 +11,12 @@ $('document').ready(function () {
         var rounds = rounds;
         var currentRound = 1;
         var pause = true;
+        var finished = false;
 
         this.start = function () {
             var that = this;
             var timer = setInterval(function () {
                 if (!pause) {
-                    console.log('min:'+min+',sec:'+sec);
-                    console.log(minutesRemaining+' '+secondsRemaining);
                     if (secondsRemaining > 0) {
                         secondsRemaining--;
                         that.displayTimer(minutesRemaining, secondsRemaining, 'roundTimer');
@@ -44,10 +43,17 @@ $('document').ready(function () {
                         that.displayTimer(breakMinRemaining, breakSecRemaining, 'breakTimer');
                         that.displayRounds(currentRound);
                     } else {
+                        lightswitch('redlight');
+                        lightswitch('greenlight');
+                        finished = true;
                         clearInterval(timer);
                     }
                 }
             }, 100);
+        };
+
+        this.isPaused = function () {
+            return pause;
         };
 
         this.displayTimer = function (mins, secs, timer) {
@@ -65,15 +71,26 @@ $('document').ready(function () {
         }
 
         this.go = function () {
+            if (finished === false) {
+                lightswitch('greenlight');
+            }
+            if (secondsRemaining !== sec) {
+                lightswitch('orangelight');
+            }
             pause = false;
         };
 
         this.stop = function () {
+            if (finished === false) {
+                lightswitch('orangelight');
+            }
+            if (secondsRemaining !== sec && finished === false) {
+                lightswitch('greenlight');
+            }
             pause = true;
         }
 
         this.setRoundLength = function (mins, secs) {
-            console.log(mins+','+secs);
             minutesRemaining = mins;
             secondsRemaining = secs;
             min = mins;
@@ -99,13 +116,14 @@ $('document').ready(function () {
             this.displayTimer(0, 0, 'roundTimer');
             this.displayTimer(0, 0, 'breakTimer');
             this.displayRounds(1);
-            this.displayTimer(0,0,'setRoundLength');
-            this.displayTimer(0,0,'setBreakLength');
+            this.displayTimer(0, 0, 'setRoundLength');
+            this.displayTimer(0, 0, 'setBreakLength');
             $('#setRounds').html(1);
+            finished = false;
         }
 
         this.reset();
-    } 
+    }
 
     // end Timer constructor
 
@@ -116,14 +134,36 @@ $('document').ready(function () {
 
     roundTimer.start();
 
+    // light functions
+
+    function lightswitch(id) {
+        var lightoff = id + '-off';
+        var lighton = id + '-on';
+        $('#' + id).toggleClass(lightoff);
+        $('#' + id).toggleClass(lighton);
+    }
+
+    function allOff() {
+        $('#greenlight').removeClass('greenlight-on');
+        $('#greenlight').addClass('greenlight-off');
+        $('#orangelight').removeClass('orangelight-on');
+        $('#orangelight').addClass('orangelight-off');
+        $('#redlight').removeClass('redlight-on');
+        $('#redlight').addClass('redlight-off');
+    }
+
     // button handling
 
     $('#go-btn').click(function () {
-        roundTimer.go();
+        if (roundTimer.isPaused()) {
+            roundTimer.go();
+        }
     });
 
     $('#pause-btn').click(function () {
-        roundTimer.stop();
+        if (!roundTimer.isPaused()) {
+            roundTimer.stop();
+        }
     });
 
 
@@ -148,7 +188,7 @@ $('document').ready(function () {
         var link = $(this).closest('div').attr('data-link');
         var mins = parseInt($('#' + timer).closest('div').find('.minutes').html());
         var secs = parseInt($('#' + timer).closest('div').find('.seconds').html());
-        if(mins === 0 && secs === 0){
+        if (mins === 0 && secs === 0) {
             return;
         }
         if (secs === 30) {
@@ -174,7 +214,7 @@ $('document').ready(function () {
         }
         $('#setRounds').html(rounds);
         roundTimer.setRounds(rounds);
-        
+
     });
 
     $('#reset-btn').click(function () {
@@ -185,10 +225,7 @@ $('document').ready(function () {
         roundTimer.clearTimer();
         roundTimer.reset();
         roundTimer.start();
+        allOff();
     });
-
-
-
-
 
 });
