@@ -49,8 +49,7 @@ $('document').ready(function () {
                         clearInterval(timer);
                     }
                 }
-            }, 100);
-        };
+            }, 100)        };
 
         this.isPaused = function () {
             return pause;
