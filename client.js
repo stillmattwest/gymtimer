@@ -51,7 +51,7 @@ $('document').ready(function () {
                         clearInterval(timer);
                     }
                 }
-            }, 100);
+            }, 1000);
         };
 
         this.isPaused = function () {
